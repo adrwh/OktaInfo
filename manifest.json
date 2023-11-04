@@ -1,0 +1,18 @@
+{
+    "manifest_version":3,
+    "version":"1.0",
+    "name":"OktaInfo, a browser extension to fix Okta's UI.",
+    "content_scripts":[
+      {
+       "matches":["https://hillsong-admin.okta.com/admin/user/profile/view/*"],
+       "js":["content.js"],
+       "css": ["css/style.css"]
+      }
+    ],
+    "icons": {
+        "16": "icon/bxs-ghost.svg",
+        "32": "icon/bxs-ghost.svg",
+        "48": "icon/bxs-ghost.svg",
+        "128": "icon/bxs-ghost.svg"
+      }
+  }

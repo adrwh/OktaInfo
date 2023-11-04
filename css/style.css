@@ -1,0 +1,10 @@
+.oktap{
+    background-color: #f2f5ff;
+    padding: 2rem;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+}
+
+.oktap_list{
+    list-style-type: none;
+}
