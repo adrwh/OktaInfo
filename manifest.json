@@ -4,7 +4,8 @@
     "name":"OktaInfo, a browser extension to fix Okta's UI.",
     "content_scripts":[
       {
-       "matches":["https://*/admin/user/profile/view/*"],
+       "matches":["https://*.okta.com/admin/user/profile/view/*",
+       "https://*.okta.com/api/v1/apps/0oa66zua47UzGgdle1t7/users/*"],
        "js":["content.js"],
        "css": ["css/style.css"]
       }

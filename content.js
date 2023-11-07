@@ -1,10 +1,30 @@
 (async function () {
     const userId = location.pathname.split("/").pop();
-    console.log(userId);
+
 	async function loadUser() {
 		const response = await fetch(`/api/v1/users/${userId}`);
 		return await response.json();
 	}
+
+	async function loadLog() {
+		const response = await fetch(`/api/v1/logs?filter=actor.id+eq+%22${userId}%22+and+eventType+sw+%22user%22`);
+		return await response.json();
+	}
+
+	async function loadM365App() {
+		const response = await fetch(`/api/v1/apps/0oa66zua47UzGgdle1t7/users/${userId}`);
+		return await response.json();
+	}
+	
+	const user = await loadUser();
+	const oktaLog = await loadLog();
+	const m365App = await loadM365App();
+
+	// Get device details
+	// const eventTypes = Object.groupBy(oktaLog, ({ eventType }) => eventType);
+	// const ipAddresses = Object.groupBy(oktaLog.map((x) => x.client.ipAddress), (x)=> x)
+
+
 
 	const formatter = new Intl.RelativeTimeFormat("en-us", {
 		numeric: "auto",
@@ -26,20 +46,20 @@
 		for (let i = 0; i < DIVISIONS.length; i++) {
 			const division = DIVISIONS[i];
 			if (Math.abs(duration) < division.amount) {
-                console.log(formatter.format(Math.round(duration), division.name))
 				return formatter.format(Math.round(duration), division.name);
 			}
 			duration /= division.amount;
 		}
 	}
 
-	const user = await loadUser();
 
     const userInfo = {
-		Id: user.id,
+		OktaId: user.id,
 		Created: `${new Date(user.created).toISOString().split('T')[0]} (${formatTimeAgo(new Date(user.created))})`,
 		Activated: `${new Date(user.activated).toISOString().split('T')[0]} (${formatTimeAgo(new Date(user.activated))})`,
 		LastLogin: `${new Date(user.lastLogin).toISOString().split('T')[0]} (${formatTimeAgo(new Date(user.lastLogin))})`,
+		ImmutableId: m365App.profile.immutableId,
+		AzureId: m365App.externalId
 	};
 
 	const parentElement = document.querySelector(
