@@ -12,13 +12,14 @@
 	}
 
 	async function loadM365App() {
-		const response = await fetch(`/api/v1/apps/0oa66zua47UzGgdle1t7/users/${userId}`);
-		return await response.json();
+			const response = await fetch(`/api/v1/apps/0oa66zua47UzGgdle1t7/users/${userId}`);
+			return await response.json();
 	}
 	
 	const user = await loadUser();
 	const oktaLog = await loadLog();
 	const m365App = await loadM365App();
+
 
 	// Get device details
 	// const eventTypes = Object.groupBy(oktaLog, ({ eventType }) => eventType);
@@ -58,8 +59,8 @@
 		Created: `${new Date(user.created).toISOString().split('T')[0]} (${formatTimeAgo(new Date(user.created))})`,
 		Activated: `${new Date(user.activated).toISOString().split('T')[0]} (${formatTimeAgo(new Date(user.activated))})`,
 		LastLogin: `${new Date(user.lastLogin).toISOString().split('T')[0]} (${formatTimeAgo(new Date(user.lastLogin))})`,
-		ImmutableId: m365App.profile.immutableId,
-		AzureId: m365App.externalId
+		ImmutableId: m365App.ok === true ? m365App.profile.immutableId: undefined,
+		AzureId: m365App.ok === true ? m365App.externalId: undefined
 	};
 
 	const parentElement = document.querySelector(

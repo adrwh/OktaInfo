@@ -5,7 +5,7 @@
     "content_scripts":[
       {
        "matches":["https://*.okta.com/admin/user/profile/view/*",
-       "https://*.okta.com/api/v1/apps/0oa66zua47UzGgdle1t7/users/*"],
+       "https://*.okta.com/api/v1/users/*"],
        "js":["content.js"],
        "css": ["css/style.css"]
       }
